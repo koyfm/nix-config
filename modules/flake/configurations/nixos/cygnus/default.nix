@@ -18,7 +18,6 @@ let
     ghostty
     gnome
     home-manager
-    nixvim
     shell
     starship
     theme
