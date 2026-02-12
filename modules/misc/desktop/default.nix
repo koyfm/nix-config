@@ -23,23 +23,27 @@
       }:
       {
         config = {
-          home.packages = with pkgs; [
-            android-tools
-            bitwarden-desktop
-            (discord.override { withVencord = true; })
-            libreoffice
-            notes
-            btop
-            nvtopPackages.full
-            thunderbird
-            obsidian
-            onlyoffice-desktopeditors
-            qbittorrent
-            scrcpy
-            telegram-desktop
-            wl-clipboard
-            pinta
-          ];
+          home = {
+            preferXdgDirectories = true;
+
+            packages = with pkgs; [
+              android-tools
+              bitwarden-desktop
+              (discord.override { withVencord = true; })
+              libreoffice
+              notes
+              btop
+              nvtopPackages.full
+              thunderbird
+              obsidian
+              onlyoffice-desktopeditors
+              qbittorrent
+              scrcpy
+              telegram-desktop
+              wl-clipboard
+              pinta
+            ];
+          };
 
           xdg.mimeApps = {
             enable = true;
