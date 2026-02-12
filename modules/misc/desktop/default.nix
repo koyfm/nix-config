@@ -29,13 +29,11 @@
             packages = with pkgs; [
               android-tools
               bitwarden-desktop
-              (discord.override { withVencord = true; })
               libreoffice
               notes
               btop
               nvtopPackages.full
               thunderbird
-              obsidian
               onlyoffice-desktopeditors
               qbittorrent
               scrcpy
@@ -45,15 +43,31 @@
             ];
           };
 
-          xdg.mimeApps = {
-            enable = true;
-            defaultApplicationPackages = with pkgs; [
-              firefox
-              thunderbird
-            ];
+          xdg = {
+            autostart = {
+              enable = true;
+              readOnly = true;
+              entries = [
+                "${config.programs.discord.package}/share/applications/discord.desktop"
+                "${config.programs.firefox.package}/share/applications/firefox.desktop"
+                "${config.programs.obsidian.package}/share/applications/obsidian.desktop"
+              ];
+            };
+            mimeApps = {
+              enable = true;
+              defaultApplicationPackages = with pkgs; [
+                firefox
+                thunderbird
+              ];
+            };
           };
 
           programs = {
+            discord = {
+              enable = true;
+              package = (pkgs.discord.override { withVencord = true; });
+              settings.DANGEROUS_ENABLE_DEVTOOLS_ONLY_ENABLE_IF_YOU_KNOW_WHAT_YOURE_DOING = true;
+            };
             firefox = {
               enable = true;
               profiles = {
@@ -76,6 +90,7 @@
                 };
               };
             };
+            obsidian.enable = true;
             java.enable = true;
             mpv = {
               enable = true;

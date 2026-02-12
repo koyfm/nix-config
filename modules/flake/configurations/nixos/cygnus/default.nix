@@ -12,7 +12,6 @@ let
   ];
   homeManagerModules = with config.flake.modules.homeManager; [
     audio
-    autostart
     desktop
     dev
     gaming

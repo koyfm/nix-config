@@ -274,8 +274,13 @@
               };
           };
 
-          xdg.mimeApps.defaultApplications = {
-            "text/plain" = [ "org.gnome.TextEditor.desktop" ];
+          xdg = {
+            autostart.entries = [
+              ./io.github.jeffshee.Hidamari.desktop
+            ];
+            mimeApps.defaultApplications = {
+              "text/plain" = [ "org.gnome.TextEditor.desktop" ];
+            };
           };
         };
       };
