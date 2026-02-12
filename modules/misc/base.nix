@@ -58,6 +58,10 @@ in
         modules.homeManager.nix
         modules.homeManager.file-templates
       ];
+
+      config = {
+        home.enableNixpkgsReleaseCheck = true;
+      };
     };
     modules.darwin.base =
       { pkgs, ... }:
