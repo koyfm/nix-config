@@ -1,7 +1,5 @@
 local spec = {}
 
-table.insert(spec, { "LazyVim/LazyVim", import = "lazyvim.plugins" })
-
 if _G["telescopeNativeFzf"] then
   table.insert(spec, { "nvim-telescope/telescope-fzf-native.nvim", enabled = true })
 end
