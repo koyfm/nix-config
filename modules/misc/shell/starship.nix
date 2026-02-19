@@ -13,6 +13,7 @@
               disabled = false;
               use_12hr = true;
             };
+            gcloud.detect_env_vars = [ "CLOUDSDK_ACTIVE_CONFIG_NAME" ];
           };
         };
         catppuccin.starship.enable = true;
