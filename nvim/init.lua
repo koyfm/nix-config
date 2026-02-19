@@ -9,7 +9,7 @@ if _G["disableMason"] then
   table.insert(spec, { "williamboman/mason.nvim", enabled = false })
 end
 
-table.insert(spec, { import = "plugins" })
+table.insert(spec, { import = "modules" })
 
 if _G["clearTreesitterDependencies"] then
   table.insert(spec, { "nvim-treesitter/nvim-treesitter", opts = { ensure_installed = {} } })

@@ -9,8 +9,10 @@
             extraPackages = with pkgs; [
               lua-language-server
               ripgrep
+              ruff
               stylua
               tree-sitter
+              ty
             ];
             plugins = with pkgs.vimPlugins; [ lazy-nvim ];
             initLua = lib.mkMerge [
