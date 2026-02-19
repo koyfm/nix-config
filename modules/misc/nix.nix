@@ -15,14 +15,14 @@
           options = "--delete-older-than 30d";
           persistent = true;
         };
-        settings = {
-          flake-registry = "";
-          auto-optimise-store = true;
-          experimental-features = [
-            "nix-command"
-            "flakes"
-          ];
-        };
+      };
+      nixSettings = {
+        flake-registry = "";
+        auto-optimise-store = true;
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
       };
     in
     {
@@ -31,19 +31,21 @@
         {
           nix = nixConfig config.nix.registry // {
             channel.enable = false;
+            settings = nixSettings;
           };
         };
 
       modules.homeManager.nix =
         {
           config,
-          pkgs,
           lib,
+          pkgs,
           ...
-        }:
+        }@args:
         {
           nix = nixConfig config.nix.registry // {
             package = lib.mkDefault pkgs.nix;
+            settings = lib.mkIf (!builtins.hasAttr "osConfig" args) nixSettings;
           };
         };
 
