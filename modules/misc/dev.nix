@@ -59,7 +59,6 @@
               bun
             ]
             ++ lib.optionals pkgs.stdenv.isLinux [
-              aseprite
               godot_4
             ];
 
