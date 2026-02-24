@@ -8,17 +8,31 @@ return {
   opts = {
     keymap = {
       preset = 'default',
-      ['<Tab>'] = { 'select_next', 'fallback' },
+      ['<Tab>'] = {
+        'select_next',
+        function()
+          return require("sidekick").nes_jump_or_apply()
+        end,
+        'fallback',
+      },
       ['<S-Tab>'] = { 'select_prev', 'fallback' },
       ['<CR>'] = { 'accept', 'fallback' },
     },
     appearance = {
       nerd_font_variant = 'mono'
     },
-    completion = { documentation = { auto_show = true } },
+    completion = {
+      documentation = { auto_show = true },
+      ghost_text = { enabled = true },
+    },
     cmdline = {
-      keymap = { preset = 'inherit' },
-      completion = { ghost_text = { enabled = true } },
+      keymap = {
+        ['<Tab>'] = { 'show', 'accept' },
+      },
+      completion = {
+        ghost_text = { enabled = true },
+        menu = { auto_show = true },
+      },
     },
     signature = { enabled = true },
     sources = {
