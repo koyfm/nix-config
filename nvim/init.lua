@@ -1,3 +1,5 @@
+require("config")
+
 local spec = {}
 
 if _G["telescopeNativeFzf"] then
