@@ -16,6 +16,10 @@ return {
       nerd_font_variant = 'mono'
     },
     completion = { documentation = { auto_show = true } },
+    cmdline = {
+      keymap = { preset = 'inherit' },
+      completion = { ghost_text = { enabled = true } },
+    },
     signature = { enabled = true },
     sources = {
       default = { 'lsp', 'path', 'snippets', 'buffer' },
