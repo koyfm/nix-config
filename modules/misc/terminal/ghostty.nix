@@ -10,6 +10,7 @@
               "ctrl+comma=unbind"
               "ctrl+shift+comma=unbind"
 
+              "alt+t=new_tab"
               "alt+p=previous_tab"
               "alt+n=next_tab"
 
