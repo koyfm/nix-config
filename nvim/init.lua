@@ -18,6 +18,5 @@ if _G["clearTreesitterDependencies"] then
 end
 
 require("lazy").setup({
-  defaults = { lazy = true },
   spec = spec,
 })

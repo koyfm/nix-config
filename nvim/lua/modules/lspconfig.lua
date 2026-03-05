@@ -1,6 +1,6 @@
 return {
   "neovim/nvim-lspconfig",
-  lazy = false,
+  event = { "BufReadPost", "BufNewFile" },
   config = function()
     vim.lsp.enable("copilot")
     vim.lsp.enable("ruff")
