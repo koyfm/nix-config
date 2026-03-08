@@ -13,10 +13,6 @@ end
 
 table.insert(spec, { import = "modules" })
 
-if _G["clearTreesitterDependencies"] then
-  table.insert(spec, { "nvim-treesitter/nvim-treesitter", opts = { ensure_installed = {} } })
-end
-
 require("lazy").setup({
   spec = spec,
 })
