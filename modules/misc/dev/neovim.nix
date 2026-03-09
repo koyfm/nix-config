@@ -7,6 +7,7 @@
           programs.neovim = {
             enable = true;
             extraPackages = with pkgs; [
+              lua-language-server
               nodejs
               ripgrep
               ruff
