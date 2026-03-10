@@ -24,7 +24,7 @@ return {
       },
     },
     keys = {
-      { "<leader>e", "<cmd>Neotree toggle float<cr>", desc = "NeoTree Filesystem" },
+      { "<leader>e", "<cmd>Neotree toggle float reveal<cr>", desc = "NeoTree Filesystem" },
       { "<leader>cs", "<cmd>Neotree toggle float document_symbols<cr>", desc = "NeoTree Document Symbols" },
     },
   },
