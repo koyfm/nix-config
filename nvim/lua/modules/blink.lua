@@ -1,28 +1,28 @@
 return {
-  'saghen/blink.cmp',
+  "saghen/blink.cmp",
   dependencies = {
-    'rafamadriz/friendly-snippets',
-    'giuxtaposition/blink-cmp-copilot',
-    'xzbdmw/colorful-menu.nvim'
+    "rafamadriz/friendly-snippets",
+    "giuxtaposition/blink-cmp-copilot",
+    "xzbdmw/colorful-menu.nvim",
   },
-  version = '1.*',
+  version = "1.*",
   ---@module 'blink.cmp'
   ---@type blink.cmp.Config
   opts = {
     keymap = {
-      preset = 'default',
-      ['<Tab>'] = { 'select_next', 'fallback' },
-      ['<S-Tab>'] = { 'select_prev', 'fallback' },
-      ['<CR>'] = { 'accept', 'fallback' },
+      preset = "default",
+      ["<Tab>"] = { "select_next", "fallback" },
+      ["<S-Tab>"] = { "select_prev", "fallback" },
+      ["<CR>"] = { "accept", "fallback" },
     },
     appearance = {
-      nerd_font_variant = 'mono'
+      nerd_font_variant = "mono",
     },
     completion = {
       list = { selection = { auto_insert = false } },
       menu = {
         draw = {
-          columns = { { 'kind_icon' }, { 'label', gap = 1 } },
+          columns = { { "kind_icon" }, { "label", gap = 1 } },
           components = {
             label = {
               text = function(ctx)
@@ -31,16 +31,16 @@ return {
               highlight = function(ctx)
                 return require("colorful-menu").blink_components_highlight(ctx)
               end,
-            }
-          }
-        }
+            },
+          },
+        },
       },
       documentation = { auto_show = true, treesitter_highlighting = true },
       ghost_text = { enabled = true },
     },
     cmdline = {
       keymap = {
-        ['<Tab>'] = { 'show', 'accept' },
+        ["<Tab>"] = { "show", "accept" },
       },
       completion = {
         ghost_text = { enabled = true },
@@ -59,7 +59,7 @@ return {
         },
       },
     },
-    fuzzy = { implementation = "prefer_rust_with_warning" }
+    fuzzy = { implementation = "prefer_rust_with_warning" },
   },
-  opts_extend = { "sources.default" }
+  opts_extend = { "sources.default" },
 }

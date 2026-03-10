@@ -17,14 +17,14 @@ return {
         "document_symbols",
       },
       buffers = {
-        follow_current_file = { enabled = true }
+        follow_current_file = { enabled = true },
       },
       filesystem = {
         follow_current_file = { enabled = true },
-      }
+      },
     },
     keys = {
-      { "<leader>e",  "<cmd>Neotree toggle float<cr>",                  desc = "NeoTree Filesystem" },
+      { "<leader>e", "<cmd>Neotree toggle float<cr>", desc = "NeoTree Filesystem" },
       { "<leader>cs", "<cmd>Neotree toggle float document_symbols<cr>", desc = "NeoTree Document Symbols" },
     },
   },
