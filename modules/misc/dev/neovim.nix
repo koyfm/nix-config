@@ -7,6 +7,7 @@
           programs.neovim = {
             enable = true;
             extraPackages = with pkgs; [
+              vscode-langservers-extracted
               lua-language-server
               nixd
               nodejs
