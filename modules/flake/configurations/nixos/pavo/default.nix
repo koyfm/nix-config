@@ -19,7 +19,6 @@ let
     ghostty
     gnome
     home-manager
-    nixvim
     hyprland
     shell
     starship
