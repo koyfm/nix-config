@@ -20,15 +20,19 @@
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-topology.url = "github:oddlama/nix-topology";
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL/main";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nvim-config = {
+      url = "github:koyfm/nvim";
+      flake = false;
+    };
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nix-topology.url = "github:oddlama/nix-topology";
   };
 }

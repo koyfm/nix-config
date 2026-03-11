@@ -1,3 +1,4 @@
+{ inputs, ... }:
 {
   flake = {
     modules.homeManager.neovim =
@@ -22,11 +23,11 @@
               (lib.mkBefore ''
                 disableMason = true
               '')
-              (builtins.readFile ../../../nvim/init.lua)
+              (builtins.readFile "${inputs.nvim-config}/init.lua")
             ];
           };
 
-          xdg.configFile."nvim/lua".source = ../../../nvim/lua;
+          xdg.configFile."nvim/lua".source = "${inputs.nvim-config}/lua";
         };
       };
   };

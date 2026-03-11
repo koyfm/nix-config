@@ -338,6 +338,22 @@
         "type": "github"
       }
     },
+    "nvim-config": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773259111,
+        "narHash": "sha256-ZGMKq9/mahrQqD/AgxUyPjJBfxqz4n5sOYd6cTJe39Y=",
+        "owner": "koyfm",
+        "repo": "nvim",
+        "rev": "bc79c7d3556b12b9969e572454581884539ca520",
+        "type": "github"
+      },
+      "original": {
+        "owner": "koyfm",
+        "repo": "nvim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "catppuccin": "catppuccin",
@@ -350,6 +366,7 @@
         "nix-topology": "nix-topology",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_4",
+        "nvim-config": "nvim-config",
         "sops-nix": "sops-nix"
       }
     },
