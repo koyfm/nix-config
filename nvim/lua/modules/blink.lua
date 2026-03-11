@@ -3,7 +3,6 @@ return {
   dependencies = {
     "rafamadriz/friendly-snippets",
     "giuxtaposition/blink-cmp-copilot",
-    "xzbdmw/colorful-menu.nvim",
   },
   version = "1.*",
   ---@module 'blink.cmp'
@@ -20,21 +19,7 @@ return {
     },
     completion = {
       list = { selection = { auto_insert = false } },
-      menu = {
-        draw = {
-          columns = { { "kind_icon" }, { "label", gap = 1 } },
-          components = {
-            label = {
-              text = function(ctx)
-                return require("colorful-menu").blink_components_text(ctx)
-              end,
-              highlight = function(ctx)
-                return require("colorful-menu").blink_components_highlight(ctx)
-              end,
-            },
-          },
-        },
-      },
+      menu = { draw = { treesitter = { "lsp" } } },
       documentation = { auto_show = true, treesitter_highlighting = true },
       ghost_text = { enabled = true },
     },
@@ -47,7 +32,6 @@ return {
         menu = { auto_show = true },
       },
     },
-    signature = { enabled = true, window = { treesitter_highlighting = true } },
     sources = {
       default = { "lsp", "path", "snippets", "buffer", "copilot" },
       providers = {
