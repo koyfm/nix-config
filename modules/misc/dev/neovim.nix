@@ -21,7 +21,6 @@
             plugins = with pkgs.vimPlugins; [ lazy-nvim ];
             initLua = lib.mkMerge [
               (lib.mkBefore ''
-                telescopeNativeFzf = true
                 disableMason = true
               '')
               (builtins.readFile ../../../nvim/init.lua)
