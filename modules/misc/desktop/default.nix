@@ -100,7 +100,10 @@
                 };
               };
             };
-            yazi.enable = true;
+            yazi = {
+              enable = true;
+              shellWrapperName = "y";
+            };
             yt-dlp.enable = true;
           };
           catppuccin.yazi.enable = true;

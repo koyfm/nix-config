@@ -16,7 +16,6 @@
       {
         config = {
           home.packages = with pkgs; [
-            helvum
             qpwgraph
           ];
 
