@@ -7,7 +7,7 @@
           programs.neovim = {
             enable = true;
             extraPackages = with pkgs; [
-              vscode-langservers-extracted
+              gcc
               lua-language-server
               nixd
               nodejs
@@ -16,6 +16,7 @@
               stylua
               tree-sitter
               ty
+              vscode-langservers-extracted
             ];
             plugins = with pkgs.vimPlugins; [ lazy-nvim ];
             initLua = lib.mkMerge [
@@ -26,25 +27,6 @@
               (builtins.readFile ../../../nvim/init.lua)
             ];
           };
-
-          xdg.configFile."nvim/parser".source =
-            let
-              parsers = pkgs.symlinkJoin {
-                name = "treesitter-parsers";
-                paths =
-                  (pkgs.vimPlugins.nvim-treesitter.withPlugins (
-                    plugins: with plugins; [
-                      c
-                      json
-                      lua
-                      python
-                      typescript
-                      yaml
-                    ]
-                  )).dependencies;
-              };
-            in
-            "${parsers}/parser";
 
           xdg.configFile."nvim/lua".source = ../../../nvim/lua;
         };
