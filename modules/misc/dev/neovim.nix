@@ -18,7 +18,6 @@
               ty
               vscode-langservers-extracted
             ];
-            plugins = with pkgs.vimPlugins; [ lazy-nvim ];
             initLua = lib.mkMerge [
               (lib.mkBefore ''
                 disableMason = true
