@@ -341,11 +341,11 @@
     "nvim-config": {
       "flake": false,
       "locked": {
-        "lastModified": 1773259111,
-        "narHash": "sha256-ZGMKq9/mahrQqD/AgxUyPjJBfxqz4n5sOYd6cTJe39Y=",
+        "lastModified": 1773433008,
+        "narHash": "sha256-q/tUrRZIaCr05hd06LAMEHBoNVkmTEhkho41mwGcW+8=",
         "owner": "koyfm",
         "repo": "nvim",
-        "rev": "bc79c7d3556b12b9969e572454581884539ca520",
+        "rev": "7b67946668b238fad4a64b2befcd8d610fad509f",
         "type": "github"
       },
       "original": {
