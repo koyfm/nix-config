@@ -49,16 +49,19 @@ top: {
           home.packages =
             with pkgs;
             [
-              commitizen
-              sshfs
-              gh
-              lazygit
-              nixfmt
-              docker-compose
-              lazydocker
-              sops
-              neovide
               bun
+              cargo
+              commitizen
+              docker-compose
+              gh
+              lazydocker
+              lazygit
+              neovide
+              nixfmt
+              rustc
+              rustfmt
+              sops
+              sshfs
             ]
             ++ lib.optionals pkgs.stdenv.isLinux [
               godot_4

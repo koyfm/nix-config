@@ -14,6 +14,7 @@
               nodejs
               ripgrep
               ruff
+              rust-analyzer
               stylua
               tree-sitter
               ty
