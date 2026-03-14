@@ -53,6 +53,7 @@ top: {
               cargo
               commitizen
               docker-compose
+              gcc
               gh
               lazydocker
               lazygit
