@@ -59,6 +59,7 @@ top: {
               lazygit
               neovide
               nixfmt
+              opencode
               rustc
               rustfmt
               sops
