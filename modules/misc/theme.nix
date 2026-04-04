@@ -14,7 +14,7 @@
           };
 
           # GTK2/3
-          gtk = {
+          gtk = rec {
             enable = true;
             theme = {
               package = pkgs.gnome-themes-extra;
@@ -24,6 +24,7 @@
               package = pkgs.papirus-icon-theme;
               name = "Papirus";
             };
+            gtk4.theme = theme;
           };
 
           # GTK4
