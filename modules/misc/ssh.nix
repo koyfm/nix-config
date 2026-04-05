@@ -1,17 +1,18 @@
 {
   flake = {
-    modules.nixos.ssh = {
-      config = {
-        services.openssh = {
-          enable = true;
-          ports = [ 22 ];
-          settings = {
-            KbdInteractiveAuthentication = false;
-            PasswordAuthentication = false;
-            PermitRootLogin = "no";
+    modules.nixos.ssh =
+      { lib, ... }:
+      {
+        config = {
+          services.openssh = {
+            enable = true;
+            settings = {
+              KbdInteractiveAuthentication = lib.mkDefault false;
+              PasswordAuthentication = lib.mkDefault false;
+              PermitRootLogin = lib.mkDefault "no";
+            };
           };
         };
       };
-    };
   };
 }

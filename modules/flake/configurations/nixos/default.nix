@@ -14,6 +14,18 @@
             inherit inputs;
           };
         };
+      mkRaspberrypi =
+        system: entrypoint:
+        inputs.nixos-raspberrypi.lib.nixosSystemFull {
+          system = system;
+          modules = [
+            config.flake.modules.nixos.imports
+            entrypoint
+          ];
+          specialArgs = {
+            inherit inputs;
+          };
+        };
     in
     {
       nixosConfigurations = {
@@ -21,6 +33,7 @@
         centaurus = mkSystem "x86_64-linux" config.flake.modules.nixos."hosts/centaurus";
         cygnus = mkSystem "x86_64-linux" config.flake.modules.nixos."hosts/cygnus";
         pavo = mkSystem "x86_64-linux" config.flake.modules.nixos."hosts/pavo";
+        pyxis = mkRaspberrypi "aarch64-linux" config.flake.modules.nixos."hosts/pyxis";
       };
     };
 
