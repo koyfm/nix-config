@@ -4,7 +4,22 @@
       config = {
         environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
-        services.earlyoom.enable = true;
+        services = {
+          earlyoom.enable = true;
+          keyd = {
+            enable = true;
+            keyboards = {
+              default = {
+                ids = [ "*" ];
+                settings = {
+                  main = {
+                    capslock = "overload(control, esc)";
+                  };
+                };
+              };
+            };
+          };
+        };
 
         programs = {
           localsend = {

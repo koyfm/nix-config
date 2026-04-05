@@ -20,22 +20,7 @@ in
 
           security.sudo.package = pkgs.sudo.override { withInsults = true; };
 
-          services = {
-            fstrim.enable = true;
-            keyd = {
-              enable = true;
-              keyboards = {
-                default = {
-                  ids = [ "*" ];
-                  settings = {
-                    main = {
-                      capslock = "overload(control, esc)";
-                    };
-                  };
-                };
-              };
-            };
-          };
+          services.fstrim.enable = true;
 
           environment.systemPackages = with pkgs; [
             wget
