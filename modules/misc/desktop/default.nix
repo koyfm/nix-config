@@ -1,34 +1,38 @@
 {
   flake = {
-    modules.nixos.desktop = {
-      config = {
-        environment.sessionVariables.NIXOS_OZONE_WL = "1";
+    modules.nixos.desktop =
+      { pkgs, ... }:
+      {
+        config = {
+          environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
-        services = {
-          earlyoom.enable = true;
-          keyd = {
-            enable = true;
-            keyboards = {
-              default = {
-                ids = [ "*" ];
-                settings = {
-                  main = {
-                    capslock = "overload(control, esc)";
+          fonts.packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
+
+          services = {
+            earlyoom.enable = true;
+            keyd = {
+              enable = true;
+              keyboards = {
+                default = {
+                  ids = [ "*" ];
+                  settings = {
+                    main = {
+                      capslock = "overload(control, esc)";
+                    };
                   };
                 };
               };
             };
           };
-        };
 
-        programs = {
-          localsend = {
-            enable = true;
-            openFirewall = true;
+          programs = {
+            localsend = {
+              enable = true;
+              openFirewall = true;
+            };
           };
         };
       };
-    };
     modules.homeManager.desktop =
       {
         config,
