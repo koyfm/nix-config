@@ -40,6 +40,8 @@ in
         { config, ... }:
         {
           imports = homeManagerModules;
+
+          home.stateVersion = "23.11";
           home.file."${config.home.homeDirectory}/.vscode-server/server-env-setup".text =
             "PATH=$PATH:/run/current-system/sw/bin/";
         };

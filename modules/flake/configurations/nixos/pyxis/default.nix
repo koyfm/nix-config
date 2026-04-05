@@ -41,6 +41,8 @@ in
       };
       home-manager.users.koi = {
         imports = homeManagerModules;
+
+        home.stateVersion = "25.11";
       };
 
       services = {

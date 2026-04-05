@@ -14,7 +14,6 @@
     modules.homeManager.home-manager = {
       imports = [ config.flake.modules.homeManager.imports ];
       config = {
-        home.stateVersion = "23.11";
         programs.home-manager.enable = true;
       };
     };
