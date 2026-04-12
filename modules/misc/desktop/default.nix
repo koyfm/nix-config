@@ -146,6 +146,9 @@
             controlcenter = {
               BatteryShowPercentage = true;
             };
+            dock = {
+              mru-spaces = false;
+            };
             NSGlobalDomain = {
               NSWindowShouldDragOnGesture = true;
             };
