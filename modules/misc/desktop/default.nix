@@ -51,7 +51,6 @@
               libreoffice
               notes
               btop
-              nvtopPackages.full
               thunderbird
               onlyoffice-desktopeditors
               qbittorrent
