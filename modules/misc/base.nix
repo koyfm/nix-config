@@ -16,8 +16,6 @@ in
           boot.loader.systemd-boot.memtest86.enable = true;
           boot.loader.grub.memtest86.enable = true;
 
-          zramSwap.enable = true;
-
           security.sudo.package = pkgs.sudo.override { withInsults = true; };
 
           services.fstrim.enable = true;

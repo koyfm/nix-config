@@ -41,6 +41,7 @@ in
           efi.canTouchEfiVariables = true;
         };
         binfmt.emulatedSystems = [ "aarch64-linux" ];
+        zswap.enable = true;
       };
 
       # nixpkgs.config.rocmSupport = true;

@@ -26,6 +26,8 @@ in
       boot.loader.raspberry-pi.bootloader = "kernel";
       boot.tmp.useTmpfs = true;
 
+      zramSwap.enable = true;
+
       networking = {
         hostName = "pyxis";
         networkmanager.enable = true;
