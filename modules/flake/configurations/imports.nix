@@ -16,6 +16,7 @@
       imports = [
         config.flake.modules.homeManager.base
         inputs.catppuccin.homeModules.catppuccin
+        inputs.mac-app-util.homeManagerModules.default
         inputs.nix-index-database.homeModules.nix-index
         inputs.sops-nix.homeManagerModules.sops
       ];
@@ -24,6 +25,7 @@
       imports = [
         config.flake.modules.darwin.base
         inputs.home-manager.darwinModules.home-manager
+        inputs.mac-app-util.darwinModules.default
         inputs.sops-nix.darwinModules.sops
       ];
     };

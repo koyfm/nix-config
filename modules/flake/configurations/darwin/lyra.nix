@@ -6,7 +6,9 @@ let
     home-manager
   ];
   homeManagerModules = with config.flake.modules.homeManager; [
+    desktop
     dev
+    ghostty
     home-manager
     karabiner
     shell

@@ -45,20 +45,27 @@
           home = {
             preferXdgDirectories = true;
 
-            packages = with pkgs; [
-              android-tools
-              bitwarden-desktop
-              libreoffice
-              notes
-              btop
-              thunderbird
-              onlyoffice-desktopeditors
-              qbittorrent
-              scrcpy
-              telegram-desktop
-              wl-clipboard
-              pinta
-            ];
+            packages =
+              with pkgs;
+              [
+                android-tools
+                bitwarden-desktop
+                btop
+                notes
+                qbittorrent
+                scrcpy
+                telegram-desktop
+                thunderbird
+              ]
+              ++ lib.optionals pkgs.stdenv.isLinux [
+                libreoffice
+                onlyoffice-desktopeditors
+                pinta
+                wl-clipboard
+              ]
+              ++ lib.optionals pkgs.stdenv.isDarwin [
+                whatsapp-for-mac
+              ];
           };
 
           xdg = {
@@ -71,7 +78,7 @@
                 "${config.programs.obsidian.package}/share/applications/obsidian.desktop"
               ];
             };
-            mimeApps = {
+            mimeApps = lib.mkIf pkgs.stdenv.isLinux {
               enable = true;
               defaultApplicationPackages = with pkgs; [
                 firefox
@@ -129,17 +136,17 @@
       };
     modules.darwin.desktop = {
       config = {
-        homebrew.casks = [
-          "anki"
-          "bitwarden"
-          "claude"
-          "discord"
-          "karabiner-elements"
-          "ollama-app"
-          "telegram"
-          "vladdoster/formulae/vimari"
-          "whatsapp"
-        ];
+        # homebrew.casks = [
+        #   "anki"
+        #   "bitwarden"
+        #   "claude"
+        #   "discord"
+        #   "karabiner-elements"
+        #   "ollama-app"
+        #   "telegram"
+        #   "vladdoster/formulae/vimari"
+        #   "whatsapp"
+        # ];
 
         system = {
           defaults = {
