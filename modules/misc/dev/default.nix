@@ -92,12 +92,6 @@ top: {
         };
       };
     modules.darwin.dev = {
-      config = {
-        homebrew.casks = [
-          "iterm2"
-          "docker-desktop"
-        ];
-      };
     };
   };
 }

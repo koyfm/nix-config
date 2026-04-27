@@ -136,18 +136,6 @@
       };
     modules.darwin.desktop = {
       config = {
-        # homebrew.casks = [
-        #   "anki"
-        #   "bitwarden"
-        #   "claude"
-        #   "discord"
-        #   "karabiner-elements"
-        #   "ollama-app"
-        #   "telegram"
-        #   "vladdoster/formulae/vimari"
-        #   "whatsapp"
-        # ];
-
         system = {
           defaults = {
             controlcenter = {

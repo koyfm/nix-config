@@ -62,15 +62,6 @@ in
 
           security.pam.services.sudo_local.touchIdAuth = true;
 
-          homebrew = {
-            enable = true;
-            onActivation = {
-              autoUpdate = true;
-              cleanup = "uninstall";
-              upgrade = true;
-            };
-          };
-
           environment.systemPackages = with pkgs; [
             git
             vim
