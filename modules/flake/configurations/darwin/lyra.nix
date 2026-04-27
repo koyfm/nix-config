@@ -14,6 +14,7 @@ let
     shell
     starship
     tmux
+    wireguard
     zsh
   ];
 in

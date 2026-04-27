@@ -17,5 +17,14 @@
         };
       };
     };
+    modules.homeManager.wireguard =
+      { pkgs, ... }:
+      {
+        config = {
+          home.packages = with pkgs; [
+            wireguard-tools
+          ];
+        };
+      };
   };
 }
