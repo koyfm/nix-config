@@ -6,7 +6,13 @@
         config = {
           programs.ghostty = {
             enable = true;
-            package = pkgs.ghostty-bin;
+            package =
+              if pkgs.stdenv.isLinux then
+                pkgs.ghostty
+              else if pkgs.stdenv.isDarwin then
+                pkgs.ghostty-bin
+              else
+                null;
             settings = {
               font-size = 11;
               keybind = [
