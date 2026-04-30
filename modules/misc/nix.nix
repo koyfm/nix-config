@@ -57,6 +57,7 @@
         nix = {
           enable = false;
           channel.enable = false;
+          settings = nixSettings;
         };
       };
     };
