@@ -50,7 +50,6 @@ top: {
             with pkgs;
             [
               bun
-              cargo
               commitizen
               docker-compose
               gcc
@@ -60,8 +59,7 @@ top: {
               neovide
               nixfmt
               opencode
-              rustc
-              rustfmt
+              rustup
               sops
               sshfs
             ]
