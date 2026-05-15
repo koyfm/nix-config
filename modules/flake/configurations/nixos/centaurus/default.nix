@@ -29,7 +29,12 @@ let
 in
 {
   flake.modules.nixos."hosts/centaurus" =
-    { lib, pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       imports = nixosModules ++ [ ./_hardware.nix ];
 
@@ -42,6 +47,15 @@ in
         };
         binfmt.emulatedSystems = [ "aarch64-linux" ];
         zswap.enable = true;
+      };
+
+      sops = {
+        defaultSopsFile = ../../../../../secrets/centaurus.yaml;
+        secrets = {
+          "koi-password" = {
+            neededForUsers = true;
+          };
+        };
       };
 
       # nixpkgs.config.rocmSupport = true;
@@ -57,6 +71,7 @@ in
 
       users.users.koi = {
         isNormalUser = true;
+        hashedPasswordFile = config.sops.secrets."koi-password".path;
         extraGroups = [
           "wheel"
           "docker"
