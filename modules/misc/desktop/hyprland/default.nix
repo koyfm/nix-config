@@ -131,7 +131,7 @@ top: {
                 playerctl = lib.getExe pkgs.playerctl;
                 swaync-client = lib.getExe' pkgs.swaynotificationcenter "swaync-client";
                 swayosd-client = lib.getExe' config.services.swayosd.package "swayosd-client";
-                terminal = lib.getExe config.services.ghostty.package;
+                terminal = lib.getExe config.programs.ghostty.package;
                 tmux = lib.getExe config.programs.tmux.package;
                 tofi-drun = lib.getExe' config.programs.tofi.package "tofi-drun";
                 wl-copy = lib.getExe' pkgs.wl-clipboard "wl-copy";
