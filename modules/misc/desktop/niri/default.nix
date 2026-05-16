@@ -29,6 +29,10 @@
             input = {
               keyboard = {
                 numlock = true;
+                xkb = {
+                  layout = "us,il";
+                  options = "grp:alt_shift_toggle";
+                };
               };
               touchpad = {
                 tap = true;
