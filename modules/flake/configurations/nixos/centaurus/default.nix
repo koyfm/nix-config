@@ -7,6 +7,7 @@ let
     gaming
     gnome
     home-manager
+    niri
     sops
     ssh
     wireguard
@@ -19,6 +20,7 @@ let
     ghostty
     gnome
     home-manager
+    niri
     shell
     sops
     starship
