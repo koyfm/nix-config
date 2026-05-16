@@ -86,7 +86,7 @@ in
         {
           imports = homeManagerModules;
 
-          home.stateVersion = "25.05";
+          home.stateVersion = "26.05";
           home.packages = with pkgs; [ prismlauncher ];
 
           services.ollama = {
