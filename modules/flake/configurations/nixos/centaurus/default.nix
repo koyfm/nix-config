@@ -99,6 +99,22 @@ in
             };
           };
 
+          programs.niri.settings = {
+            input.mouse = {
+              accel-speed = 0.5;
+            };
+            outputs = {
+              "DP-1" = {
+                mode = {
+                  width = 3440;
+                  height = 1440;
+                  refresh = 164.900;
+                };
+                variable-refresh-rate = "on-demand";
+              };
+            };
+          };
+
           dconf.settings."org/gnome/shell".enabled-extensions = [ "hass-gshell@geoph9-on-github" ];
         };
 

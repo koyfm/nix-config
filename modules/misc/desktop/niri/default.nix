@@ -39,8 +39,6 @@
                 natural-scroll = true;
               };
             };
-            outputs = {
-            };
             layout = {
               gaps = 16;
               center-focused-column = "never";
