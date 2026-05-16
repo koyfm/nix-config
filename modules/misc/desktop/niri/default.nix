@@ -72,9 +72,7 @@
                 color = "#0007";
               };
             };
-            spawn-at-startup = lib.optional config.programs.noctalia-shell.enable {
-              command = [ "noctalia-shell" ];
-            };
+            spawn-at-startup = [ ];
             prefer-no-csd = false;
             screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
             window-rules = [
@@ -105,7 +103,7 @@
                   action.spawn = [ "${lib.getExe config.programs.fuzzel.package}" ];
                   hotkey-overlay.title = "Open a Launcher: fuzzel";
                 };
-                "Super+Alt+L" = {
+                "Super+Alt+L" = lib.mkDefault {
                   action.spawn = [ "${lib.getExe config.programs.swaylock.package}" ];
                   hotkey-overlay.title = "Lock the Screen: swaylock";
                 };
@@ -120,41 +118,41 @@
                     hotkey-overlay.hidden = true;
                   };
 
-                "XF86AudioRaiseVolume" = {
+                "XF86AudioRaiseVolume" = lib.mkDefault {
                   action.spawn-sh = "${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0";
                   allow-when-locked = true;
                 };
-                "XF86AudioLowerVolume" = {
+                "XF86AudioLowerVolume" = lib.mkDefault {
                   action.spawn-sh = "${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
                   allow-when-locked = true;
                 };
-                "XF86AudioMute" = {
+                "XF86AudioMute" = lib.mkDefault {
                   action.spawn-sh = "${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle";
                   allow-when-locked = true;
                 };
-                "XF86AudioMicMute" = {
+                "XF86AudioMicMute" = lib.mkDefault {
                   action.spawn-sh = "${wpctl} set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
                   allow-when-locked = true;
                 };
 
-                "XF86AudioPlay" = {
+                "XF86AudioPlay" = lib.mkDefault {
                   action.spawn-sh = "${playerctl} play-pause";
                   allow-when-locked = true;
                 };
-                "XF86AudioStop" = {
+                "XF86AudioStop" = lib.mkDefault {
                   action.spawn-sh = "${playerctl} stop";
                   allow-when-locked = true;
                 };
-                "XF86AudioPrev" = {
+                "XF86AudioPrev" = lib.mkDefault {
                   action.spawn-sh = "${playerctl} previous";
                   allow-when-locked = true;
                 };
-                "XF86AudioNext" = {
+                "XF86AudioNext" = lib.mkDefault {
                   action.spawn-sh = "${playerctl} next";
                   allow-when-locked = true;
                 };
 
-                "XF86MonBrightnessUp" = {
+                "XF86MonBrightnessUp" = lib.mkDefault {
                   action.spawn = [
                     "${brightnessctl}"
                     "--class=backlight"
@@ -163,7 +161,7 @@
                   ];
                   allow-when-locked = true;
                 };
-                "XF86MonBrightnessDown" = {
+                "XF86MonBrightnessDown" = lib.mkDefault {
                   action.spawn = [
                     "${brightnessctl}"
                     "--class=backlight"
@@ -286,7 +284,7 @@
                 "Mod+BracketLeft".action.consume-or-expel-window-left = { };
                 "Mod+BracketRight".action.consume-or-expel-window-right = { };
 
-                "Mod+Comma".action.consume-window-into-column = { };
+                "Mod+Comma" = lib.mkDefault { action.consume-window-into-column = { }; };
                 "Mod+Period".action.expel-window-from-column = { };
 
                 "Mod+R".action.switch-preset-column-width = { };
