@@ -15,77 +15,35 @@
             binds =
               let
                 noctalia-shell = lib.getExe config.programs.noctalia-shell.package;
-                ipc = args: {
+                ipc = cmd: {
                   action.spawn = [
                     noctalia-shell
                     "ipc"
                     "call"
                   ]
-                  ++ args;
+                  ++ lib.splitString " " cmd;
                   hotkey-overlay.hidden = true;
                 };
               in
               {
-                "Mod+Space" = ipc [
-                  "launcher"
-                  "toggle"
-                ];
-                "Mod+S" = ipc [
-                  "controlCenter"
-                  "toggle"
-                ];
-                "Mod+Comma" = ipc [
-                  "settings"
-                  "toggle"
-                ];
+                "Mod+Space" = ipc "launcher toggle";
+                "Mod+S" = ipc "controlCenter toggle";
+                "Mod+Comma" = ipc "settings toggle";
 
-                "Super+Alt+L" = ipc [
-                  "lockScreen"
-                  "lock"
-                ];
+                "Super+Alt+L" = ipc "lockScreen lock";
 
-                "XF86AudioRaiseVolume" = ipc [
-                  "volume"
-                  "increase"
-                ];
-                "XF86AudioLowerVolume" = ipc [
-                  "volume"
-                  "decrease"
-                ];
-                "XF86AudioMute" = ipc [
-                  "volume"
-                  "muteOutput"
-                ];
-                "XF86AudioMicMute" = ipc [
-                  "volume"
-                  "muteInput"
-                ];
+                "XF86AudioRaiseVolume" = ipc "volume increase";
+                "XF86AudioLowerVolume" = ipc "volume decrease";
+                "XF86AudioMute" = ipc "volume muteOutput";
+                "XF86AudioMicMute" = ipc "volume muteInput";
 
-                "XF86AudioPlay" = ipc [
-                  "media"
-                  "playPause"
-                ];
-                "XF86AudioStop" = ipc [
-                  "media"
-                  "pause"
-                ];
-                "XF86AudioPrev" = ipc [
-                  "media"
-                  "previous"
-                ];
-                "XF86AudioNext" = ipc [
-                  "media"
-                  "next"
-                ];
+                "XF86AudioPlay" = ipc "media playPause";
+                "XF86AudioStop" = ipc "media pause";
+                "XF86AudioPrev" = ipc "media previous";
+                "XF86AudioNext" = ipc "media next";
 
-                "XF86MonBrightnessUp" = ipc [
-                  "brightness"
-                  "increase"
-                ];
-                "XF86MonBrightnessDown" = ipc [
-                  "brightness"
-                  "decrease"
-                ];
+                "XF86MonBrightnessUp" = ipc "brightness increase";
+                "XF86MonBrightnessDown" = ipc "brightness decrease";
               };
           };
         };
