@@ -18,6 +18,7 @@
         inputs.catppuccin.homeModules.catppuccin
         inputs.mac-app-util.homeManagerModules.default
         inputs.niri.homeModules.niri
+        inputs.noctalia.homeModules.default
         inputs.nix-index-database.homeModules.nix-index
         inputs.sops-nix.homeManagerModules.sops
       ];

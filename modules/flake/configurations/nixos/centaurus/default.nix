@@ -21,6 +21,7 @@ let
     gnome
     home-manager
     niri
+    noctalia
     shell
     sops
     starship

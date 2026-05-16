@@ -16,7 +16,12 @@
         };
       };
     modules.homeManager.niri =
-      { lib, pkgs, ... }:
+      {
+        config,
+        lib,
+        pkgs,
+        ...
+      }:
       {
         config = {
           programs.niri.settings = {
@@ -67,9 +72,9 @@
                 color = "#0007";
               };
             };
-            spawn-at-startup = [
-              { command = [ "waybar" ]; }
-            ];
+            spawn-at-startup = lib.optional config.programs.noctalia-shell.enable {
+              command = [ "noctalia-shell" ];
+            };
             prefer-no-csd = false;
             screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
             window-rules = [
