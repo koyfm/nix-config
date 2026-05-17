@@ -298,7 +298,11 @@
                   clipboardWatchTextCommand = "${wl-paste} --type text --watch cliphist store";
                   clipboardWatchImageCommand = "${wl-paste} --type image --watch cliphist store";
                   position = "center";
-                  pinnedApps = [ ];
+                  pinnedApps = [
+                    "com.mitchellh.ghostty"
+                    "firefox"
+                    "discord"
+                  ];
                   sortByMostUsed = true;
                   terminalCommand = "${lib.getExe config.programs.ghostty.package} -e";
                   customLaunchPrefixEnabled = false;
