@@ -21,10 +21,17 @@
             };
 
           programs = {
-            zoxide.enable = true;
+            bash = {
+              enable = true;
+              historyFile = "${config.xdg.stateHome}/.bash_history";
+            };
             bat.enable = true;
+            eza = {
+              enable = true;
+              git = true;
+              icons = "auto";
+            };
             fd.enable = true;
-            ripgrep.enable = true;
             fzf =
               let
                 fd = lib.getExe config.programs.fd.package;
@@ -35,16 +42,9 @@
                 fileWidgetCommand = "${fd} --type f";
                 changeDirWidgetCommand = "${fd} --type d";
               };
-            eza = {
-              enable = true;
-              git = true;
-              icons = "auto";
-            };
-
-            bash = {
-              enable = true;
-              historyFile = "${config.xdg.stateHome}/.bash_history";
-            };
+            jq.enable = true;
+            ripgrep.enable = true;
+            zoxide.enable = true;
           };
 
           catppuccin = {
