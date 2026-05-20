@@ -81,7 +81,7 @@
               {
                 matches = [
                   {
-                    app-id = "firefox$";
+                    app-id = "^firefox$";
                     title = "^Picture-in-Picture$";
                   }
                 ];
