@@ -11,9 +11,7 @@
   ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  boot.kernelParams = [
-    "amdgpu.ppfeaturemask=0xf7fff" # disable "PP_GFXOFF_MASK" dynamic graphics engine
-  ];
+  boot.kernelParams = [ ];
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/ddb26d08-4077-4342-8bed-d87ba43c6234";
