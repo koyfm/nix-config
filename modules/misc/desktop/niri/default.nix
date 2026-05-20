@@ -87,6 +87,22 @@
                 ];
                 open-floating = true;
               }
+              {
+                matches = [
+                  {
+                    app-id = "^steam$";
+                  }
+                ];
+                variable-refresh-rate = true;
+              }
+              {
+                matches = [
+                  {
+                    app-id = "^steam_app_.*$";
+                  }
+                ];
+                variable-refresh-rate = true;
+              }
             ];
             binds =
               let
