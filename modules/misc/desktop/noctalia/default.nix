@@ -10,8 +10,15 @@
       {
         config = {
           home.packages = with pkgs; [
+            evtest
+            grim
+            imagemagick
             mpvpaper
+            python3
             qt6.qtwebsockets
+            slurp
+            tesseract
+            translate-shell
           ];
 
           programs.noctalia = {
@@ -19,12 +26,17 @@
 
             settings = {
               config_version = 12;
+              audio = {
+                enable_sounds = true;
+              };
               bar = {
                 default = {
                   capsule = true;
                   center = [ "workspaces" ];
                   concave_edge_corners = false;
                   end = [
+                    "widget"
+                    "widget_2"
                     "tray"
                     "status"
                     "notifications"
@@ -95,11 +107,18 @@
                   entity_manager_open_near_click = true;
                   entity_manager_placement = "attached";
                 };
+                "thepunkoff/pomodoro" = {
+                  auto-start-breaks = true;
+                  auto-start-work = true;
+                  use-bundled-alarm-sound = true;
+                };
               };
               plugins = {
                 enabled = [
                   "noctalia/mpvpaper"
                   "pozzoo/hassio"
+                  "thepunkoff/pomodoro"
+                  "alexander/screen-toolkit"
                 ];
               };
               shell = {
@@ -126,6 +145,12 @@
                 };
                 status = {
                   type = "pozzoo/hassio:status";
+                };
+                widget = {
+                  type = "thepunkoff/pomodoro:widget";
+                };
+                widget_2 = {
+                  type = "alexander/screen-toolkit:widget";
                 };
               };
             };
