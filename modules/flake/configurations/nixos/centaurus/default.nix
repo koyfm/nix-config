@@ -70,7 +70,59 @@ in
 
       time.timeZone = "Asia/Jerusalem";
 
-      i18n.defaultLocale = "en_US.UTF-8";
+      fonts.packages = with pkgs; [ noto-fonts-cjk-sans ];
+
+      i18n = {
+        defaultLocale = "en_US.UTF-8";
+        extraLocales = [
+          "he_IL.UTF-8/UTF-8"
+          "ja_JP.UTF-8/UTF-8"
+        ];
+
+        inputMethod = {
+          enable = true;
+          type = "fcitx5";
+          fcitx5 = {
+            waylandFrontend = true;
+            ignoreUserConfig = true;
+            addons = with pkgs; [
+              fcitx5-gtk
+              fcitx5-mozc-ut
+            ];
+            settings = {
+              globalOptions = {
+                Hotkey = {
+                  EnumerateWithTriggerKeys = "False";
+                  EnumerateSkipFirst = "False";
+                  ModifierOnlyKeyTimeout = "250";
+                };
+                "Hotkey/EnumerateForwardKeys"."0" = "Alt+Shift_L";
+                "Hotkey/EnumerateBackwardKeys"."0" = "Shift+Alt_L";
+                "Hotkey/TriggerKeys"."0" = "";
+                "Hotkey/AltTriggerKeys"."0" = "";
+                "Hotkey/EnumerateGroupForwardKeys"."0" = "";
+                "Hotkey/EnumerateGroupBackwardKeys"."0" = "";
+                Behavior = {
+                  ActiveByDefault = "False";
+                  ShareInputState = "No";
+                  ShowInputMethodInformation = "False";
+                };
+              };
+              inputMethod = {
+                "Groups/0" = {
+                  Name = "Default";
+                  "Default Layout" = "us";
+                  DefaultIM = "keyboard-us";
+                };
+                "Groups/0/Items/0".Name = "keyboard-us";
+                "Groups/0/Items/1".Name = "keyboard-il";
+                "Groups/0/Items/2".Name = "mozc";
+                GroupOrder."0" = "Default";
+              };
+            };
+          };
+        };
+      };
 
       users.users.koi = {
         isNormalUser = true;
@@ -100,8 +152,14 @@ in
           };
 
           programs.niri.settings = {
-            input.mouse = {
-              accel-speed = 0.5;
+            input = {
+              mouse = {
+                accel-speed = 0.5;
+              };
+              keyboard.xkb = {
+                layout = lib.mkForce "us";
+                options = lib.mkForce "";
+              };
             };
             outputs = {
               "DP-1" = {
@@ -113,6 +171,21 @@ in
                 variable-refresh-rate = "on-demand";
               };
             };
+            binds."Mod+Shift+Space" =
+              let
+                fcitx5-remote = lib.getExe' pkgs.fcitx5 "fcitx5-remote";
+                cycleInputMethod = pkgs.writeShellScript "cycle-input-method" ''
+                  case "$(${fcitx5-remote} -n)" in
+                    keyboard-us) ${fcitx5-remote} -s keyboard-il ;;
+                    keyboard-il) ${fcitx5-remote} -s mozc ;;
+                    *)           ${fcitx5-remote} -s keyboard-us ;;
+                  esac
+                '';
+              in
+              {
+                action.spawn = [ "${cycleInputMethod}" ];
+                hotkey-overlay.title = "Cycle input method (EN / HE / JA)";
+              };
           };
 
           dconf.settings."org/gnome/shell".enabled-extensions = [ "hass-gshell@geoph9-on-github" ];
