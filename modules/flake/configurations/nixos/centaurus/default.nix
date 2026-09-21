@@ -116,8 +116,18 @@ in
                 };
                 "Groups/0/Items/0".Name = "keyboard-us";
                 "Groups/0/Items/1".Name = "keyboard-il";
-                "Groups/0/Items/2".Name = "mozc";
-                GroupOrder."0" = "Default";
+                "Groups/1" = {
+                  Name = "Japanese";
+                  "Default Layout" = "us";
+                  DefaultIM = "keyboard-us";
+                };
+                "Groups/1/Items/0".Name = "keyboard-us";
+                "Groups/1/Items/1".Name = "keyboard-il";
+                "Groups/1/Items/2".Name = "mozc";
+                GroupOrder = {
+                  "0" = "Default";
+                  "1" = "Japanese";
+                };
               };
             };
           };
@@ -171,21 +181,13 @@ in
                 variable-refresh-rate = "on-demand";
               };
             };
-            binds."Mod+Shift+Space" =
-              let
-                fcitx5-remote = lib.getExe' pkgs.fcitx5 "fcitx5-remote";
-                cycleInputMethod = pkgs.writeShellScript "cycle-input-method" ''
-                  case "$(${fcitx5-remote} -n)" in
-                    keyboard-us) ${fcitx5-remote} -s keyboard-il ;;
-                    keyboard-il) ${fcitx5-remote} -s mozc ;;
-                    *)           ${fcitx5-remote} -s keyboard-us ;;
-                  esac
-                '';
-              in
-              {
-                action.spawn = [ "${cycleInputMethod}" ];
-                hotkey-overlay.title = "Cycle input method (EN / HE / JA)";
-              };
+            binds."Mod+Shift+Space" = {
+              action.spawn = [
+                (lib.getExe' pkgs.fcitx5 "fcitx5-remote")
+                "-t"
+              ];
+              hotkey-overlay.title = "Toggle input method";
+            };
           };
 
           dconf.settings."org/gnome/shell".enabled-extensions = [ "hass-gshell@geoph9-on-github" ];
