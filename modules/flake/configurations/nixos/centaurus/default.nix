@@ -199,6 +199,10 @@ in
         fwupd.enable = true;
         smartd.enable = true;
         hardware.openrgb.enable = true;
+        hyper-headset = {
+          enable = true;
+          autostart = true;
+        };
         tailscale.enable = true;
         sunshine = {
           enable = lib.mkDefault true;

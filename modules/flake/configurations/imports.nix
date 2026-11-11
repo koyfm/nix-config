@@ -4,6 +4,7 @@
     modules.nixos.imports = {
       imports = [
         config.flake.modules.nixos.base
+        config.flake.modules.nixos.nixpkgs-mod
         inputs.catppuccin.nixosModules.catppuccin
         inputs.home-manager.nixosModules.home-manager
         inputs.nix-index-database.nixosModules.nix-index
