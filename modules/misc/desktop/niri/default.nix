@@ -25,7 +25,7 @@
       {
         config = {
           programs.niri.settings = {
-            xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite-stable;
+            xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite-unstable;
             input = {
               keyboard = {
                 numlock = true;
