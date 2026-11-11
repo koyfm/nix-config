@@ -57,7 +57,6 @@ top: {
               gh
               lazydocker
               lazygit
-              neovide
               nixfmt
               opencode
               rustc
