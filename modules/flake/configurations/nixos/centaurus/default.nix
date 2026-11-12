@@ -154,13 +154,6 @@ in
           home.stateVersion = "26.05";
           home.packages = with pkgs; [ prismlauncher ];
 
-          services.ollama = {
-            enable = true;
-            environmentVariables = {
-              OLLAMA_CONTEXT_LENGTH = "16384";
-            };
-          };
-
           programs.niri.settings = {
             input = {
               mouse = {
@@ -202,6 +195,11 @@ in
         hyper-headset = {
           enable = true;
           autostart = true;
+        };
+        llama-cpp = {
+          enable = true;
+          package = pkgs.llama-cpp-vulkan;
+          settings.models-preset = "${./models-preset.ini}";
         };
         tailscale.enable = true;
         sunshine = {
