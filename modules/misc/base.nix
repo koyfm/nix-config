@@ -42,6 +42,8 @@ in
 
       config = {
         home.enableNixpkgsReleaseCheck = true;
+
+        programs.nh.enable = true;
       };
     };
     modules.darwin.base =
