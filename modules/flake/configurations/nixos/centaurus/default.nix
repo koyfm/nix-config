@@ -194,7 +194,7 @@ in
                 };
               };
               models.providers.llamacpp = {
-                baseUrl = "http://${config.services.llama-cpp.settings.host}:${toString config.services.llama-cpp.settings.port}/v1";
+                baseUrl = "http://localhost:${toString config.services.llama-cpp.settings.port}/v1";
                 api = "openai-completions";
                 apiKey = "none";
                 models = [
@@ -236,7 +236,11 @@ in
         llama-cpp = {
           enable = true;
           package = pkgs.llama-cpp-vulkan;
-          settings.models-preset = "${./models-preset.ini}";
+          settings = {
+            host = "0.0.0.0";
+            port = 11435;
+            models-preset = "${./models-preset.ini}";
+          };
         };
         tailscale.enable = true;
         sunshine = {
