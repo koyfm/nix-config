@@ -154,32 +154,69 @@ in
           home.stateVersion = "26.05";
           home.packages = with pkgs; [ prismlauncher ];
 
-          programs.niri.settings = {
-            input = {
-              mouse = {
-                accel-speed = 0.5;
-              };
-              keyboard.xkb = {
-                layout = lib.mkForce "us";
-                options = lib.mkForce "";
-              };
-            };
-            outputs = {
-              "DP-1" = {
-                mode = {
-                  width = 3440;
-                  height = 1440;
-                  refresh = 164.900;
+          programs = {
+            niri.settings = {
+              input = {
+                mouse = {
+                  accel-speed = 0.5;
                 };
-                variable-refresh-rate = "on-demand";
+                keyboard.xkb = {
+                  layout = lib.mkForce "us";
+                  options = lib.mkForce "";
+                };
+              };
+              outputs = {
+                "DP-1" = {
+                  mode = {
+                    width = 3440;
+                    height = 1440;
+                    refresh = 164.900;
+                  };
+                  variable-refresh-rate = "on-demand";
+                };
+              };
+              binds."Mod+Shift+Space" = {
+                action.spawn = [
+                  (lib.getExe' pkgs.fcitx5 "fcitx5-remote")
+                  "-t"
+                ];
+                hotkey-overlay.title = "Toggle input method";
               };
             };
-            binds."Mod+Shift+Space" = {
-              action.spawn = [
-                (lib.getExe' pkgs.fcitx5 "fcitx5-remote")
-                "-t"
-              ];
-              hotkey-overlay.title = "Toggle input method";
+
+            pi-coding-agent = {
+              settings = {
+                defaultProvider = "llamacpp";
+                defaultModel = "Qwen3.8-27B";
+                compaction.modelOverrides."llamacpp/Qwen3.8-27B" = {
+                  reserveTokens = 8192;
+                  keepRecentTokens = 8192;
+                };
+              };
+              models.providers.llamacpp = {
+                baseUrl = "http://${config.services.llama-cpp.settings.host}:${toString config.services.llama-cpp.settings.port}/v1";
+                api = "openai-completions";
+                apiKey = "none";
+                models = [
+                  {
+                    id = "Qwen3.8-27B";
+                    name = "Qwen3.8 27B (local)";
+                    reasoning = true;
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    contextWindow = 32768;
+                    maxTokens = 8192;
+                    cost = {
+                      input = 0.15;
+                      output = 1.875;
+                      cacheRead = 0.0375;
+                      cacheWrite = 0;
+                    };
+                  }
+                ];
+              };
             };
           };
 

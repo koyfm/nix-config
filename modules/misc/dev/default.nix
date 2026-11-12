@@ -73,6 +73,10 @@ top: {
               enable = true;
               nix-direnv.enable = true;
             };
+            pi-coding-agent = {
+              enable = true;
+              mutableSettings = true;
+            };
             uv.enable = true;
             vscode = {
               enable = true;
