@@ -16,7 +16,7 @@
         };
       mkRaspberrypi =
         system: entrypoint:
-        inputs.nixos-raspberrypi.lib.nixosSystemFull {
+        inputs.nixos-raspberrypi.lib.nixosSystem {
           system = system;
           modules = [
             config.flake.modules.nixos.imports
