@@ -6,34 +6,37 @@
 {
   flake =
     let
-      nixConfig = registry: {
-        registry = builtins.mapAttrs (_: flake: { inherit flake; }) inputs;
-        nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") registry;
-        gc = {
-          automatic = true;
-          dates = "weekly";
-          options = "--delete-older-than 30d";
-          persistent = true;
-        };
+      registry = registryInputs: builtins.mapAttrs (_: flake: { inherit flake; }) registryInputs;
+      nixPath = registry: lib.mapAttrsToList (key: value: "${key}=${value.to.path}") registry;
+      gc = {
+        automatic = true;
+        dates = "weekly";
+        options = "--delete-older-than 30d";
+        persistent = true;
       };
-      nixSettings = {
+      settings = {
         flake-registry = "";
-        auto-optimise-store = true;
         experimental-features = [
           "nix-command"
           "flakes"
         ];
-        trusted-users = [ "@wheel" ];
       }
       // (import "${inputs.self}/flake.nix").nixConfig;
+      daemonSettings = settings // {
+        auto-optimise-store = true;
+        trusted-users = [ "@wheel" ];
+      };
     in
     {
       modules.nixos.nix =
         { config, ... }:
         {
-          nix = nixConfig config.nix.registry // {
+          nix = {
+            registry = registry (removeAttrs inputs [ "nixpkgs" ]); # nixpkgs is registered by lib.nixosSystem
+            nixPath = nixPath config.nix.registry;
+            inherit gc;
             channel.enable = false;
-            settings = nixSettings;
+            settings = daemonSettings;
           };
         };
 
@@ -45,17 +48,22 @@
           ...
         }@args:
         {
-          nix = nixConfig config.nix.registry // {
-            package = lib.mkDefault pkgs.nix;
-            settings = lib.mkIf (!builtins.hasAttr "osConfig" args) nixSettings;
-          };
+          nix = lib.mkMerge [
+            { inherit gc; }
+            (lib.mkIf (!(args ? osConfig) || pkgs.stdenv.hostPlatform.isDarwin) {
+              package = lib.mkDefault pkgs.nix;
+              registry = registry inputs;
+              nixPath = nixPath config.nix.registry;
+              inherit gc settings;
+            })
+          ];
         };
 
       modules.darwin.nix = {
         nix = {
           enable = false;
           channel.enable = false;
-          settings = nixSettings;
+          settings = daemonSettings;
         };
       };
     };
