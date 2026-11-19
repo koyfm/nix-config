@@ -29,6 +29,21 @@ in
 
       system.stateVersion = "25.11";
 
+      nixpkgs.overlays = [
+        (final: prev: {
+          moonlight-qt = prev.moonlight-qt.override {
+            ffmpeg = final.rpi.ffmpeg-headless;
+            SDL2 = final.sdl2-compat.override {
+              # https://github.com/moonlight-stream/moonlight-qt/issues/2104
+              sdl3 = final.sdl3.overrideAttrs (old: {
+                patches = (old.patches or [ ]) ++ [ ./sdl3-hidapi-udev-filter.patch ];
+                doCheck = false; # test fails in qemu
+              });
+            };
+          };
+        })
+      ];
+
       boot.loader.raspberry-pi.bootloader = "kernel";
       boot.tmp.useTmpfs = true;
 
@@ -46,6 +61,7 @@ in
       hardware = {
         graphics.enable = true;
         bluetooth.enable = true;
+        steam-hardware.enable = true;
       };
 
       users.users.koi = {
@@ -82,29 +98,23 @@ in
                 builtins.toJSON { device = "/dev/dri/by-path/platform-axi:gpu-card"; }
               )
             );
-            SDL_JOYSTICK_HIDAPI_SWITCH = "0";
           };
-          serviceConfig =
-            let
-              moonlight = pkgs.moonlight-qt.override { ffmpeg = pkgs.rpi.ffmpeg-headless; };
-            in
-            {
-              User = "koi";
-              PAMName = "login";
-              TTYPath = "/dev/tty1";
-              TTYReset = true;
-              TTYVHangup = true;
-              StandardInput = "tty";
-              StandardOutput = "journal";
-              ExecStart = "${lib.getExe moonlight}";
-              Restart = "always";
-              RestartSec = 5;
-            };
+          serviceConfig = {
+            User = "koi";
+            PAMName = "login";
+            TTYPath = "/dev/tty1";
+            TTYReset = true;
+            TTYVHangup = true;
+            StandardInput = "tty";
+            StandardOutput = "journal";
+            ExecStart = lib.getExe pkgs.moonlight-qt;
+            Restart = "always";
+            RestartSec = 5;
+          };
         };
       };
 
       services = {
-        joycond.enable = true;
         udev.extraRules = ''
           # Ignore partitions with "Required Partition" GPT partition attribute
           ENV{ID_PART_ENTRY_SCHEME}=="gpt", \
