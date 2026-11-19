@@ -1,15 +1,10 @@
 {
   flake = {
-    modules.nixos.niri =
-      { pkgs, ... }:
-      {
-        config = {
-          programs.niri = {
-            enable = true;
-            package = pkgs.niri;
-          };
-        };
+    modules.nixos.niri = {
+      config = {
+        programs.niri.enable = true;
       };
+    };
     modules.homeManager.niri =
       {
         config,
@@ -20,7 +15,7 @@
       {
         config = {
           programs.niri = {
-            package = pkgs.niri;
+            package = lib.mkDefault pkgs.niri;
             settings = {
               xwayland-satellite.path = lib.getExe pkgs.xwayland-satellite;
               input = {

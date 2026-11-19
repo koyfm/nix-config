@@ -43,6 +43,23 @@ in
 
       system.stateVersion = "25.05";
 
+      nixpkgs.overlays = [
+        (final: prev: {
+          niri = prev.niri.overrideAttrs {
+            src = final.fetchFromGitHub {
+              owner = "willybarret";
+              repo = "niri";
+              rev = "7fd585dd44ed67644977dd9561bb6e8b3837f8f7";
+              hash = "sha256-OWF03QF62Q8HJ3fCme3I3GX7dKX9YU+JD7bhTiIzfQ4=";
+            };
+            cargoDeps = final.rustPlatform.fetchCargoVendor {
+              inherit (final.niri) src;
+              hash = "sha256-Yqvambc4F7PdGkGxrxp5xD6PqAEAWmMgqOYZRY+TIBA=";
+            };
+          };
+        })
+      ];
+
       boot = {
         loader = {
           systemd-boot.enable = true;
@@ -174,6 +191,7 @@ in
                   };
                   variable-refresh-rate = "on-demand";
                 };
+                "sunshine".scale = 2;
               };
               binds."Mod+Shift+Space" = {
                 action.spawn = [
@@ -247,6 +265,31 @@ in
           enable = lib.mkDefault true;
           openFirewall = true;
           capSysAdmin = true;
+          settings = {
+            capture = "wlr";
+            global_prep_cmd =
+              let
+                niri = lib.getExe config.programs.niri.package;
+              in
+              builtins.toJSON [
+                {
+                  do = ''sh -c "${
+                    toString [
+                      "${niri} msg create-virtual-output"
+                      "--name sunshine"
+                      "--width $SUNSHINE_CLIENT_WIDTH"
+                      "--height $SUNSHINE_CLIENT_HEIGHT"
+                      "--refresh-rate $SUNSHINE_CLIENT_FPS"
+                    ]
+                  }"'';
+                  undo = "${niri} msg remove-virtual-output sunshine";
+                }
+                {
+                  do = "${niri} msg output DP-1 off";
+                  undo = "${niri} msg output DP-1 on";
+                }
+              ];
+          };
         };
       };
 
