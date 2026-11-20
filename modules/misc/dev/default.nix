@@ -58,7 +58,6 @@ top: {
               lazydocker
               lazygit
               nixfmt
-              opencode
               rustc
               rustfmt
               sops
@@ -73,6 +72,7 @@ top: {
               enable = true;
               nix-direnv.enable = true;
             };
+            opencode.enable = true;
             pi-coding-agent = {
               enable = true;
               mutableSettings = true;

@@ -83,6 +83,9 @@ in
       networking = {
         hostName = "centaurus";
         networkmanager.enable = true;
+        firewall.allowedTCPPorts = [
+          49374 # opencode
+        ];
       };
 
       time.timeZone = "Asia/Jerusalem";
@@ -201,6 +204,8 @@ in
                 hotkey-overlay.title = "Toggle input method";
               };
             };
+
+            opencode.settings.server.hostname = "0.0.0.0";
 
             pi-coding-agent = {
               settings = {
