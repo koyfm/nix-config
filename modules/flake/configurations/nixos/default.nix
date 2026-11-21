@@ -29,6 +29,7 @@
     in
     {
       nixosConfigurations = {
+        aquarius = mkSystem "x86_64-linux" config.flake.modules.nixos."hosts/aquarius";
         wsl = mkSystem "x86_64-linux" config.flake.modules.nixos."hosts/wsl";
         centaurus = mkSystem "x86_64-linux" config.flake.modules.nixos."hosts/centaurus";
         cygnus = mkSystem "x86_64-linux" config.flake.modules.nixos."hosts/cygnus";
