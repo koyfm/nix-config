@@ -12,7 +12,7 @@ let
 in
 {
   flake.modules.nixos."hosts/aquarius" =
-    { pkgs, ... }:
+    { config, pkgs, ... }:
     {
       imports = nixosModules ++ [
         ./_hardware.nix
@@ -27,6 +27,24 @@ in
           efi.canTouchEfiVariables = true;
         };
         zswap.enable = true;
+        initrd = {
+          network = {
+            enable = true;
+            ssh = {
+              enable = true;
+              port = 2222;
+              hostKeys = [ "/etc/secrets/initrd/ssh_host_ed25519_key" ];
+              authorizedKeys = [
+                ''command="systemctl default" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINaEhihITQ0cBCoXKbiHoeRoyAW22l9bIPLn97PLeMwm koi@centaurus''
+              ];
+            };
+          };
+          clevisLuksAskpass = {
+            enable = true;
+            # TODO https://github.com/NixOS/nixpkgs/pull/587954
+            package = pkgs.clevis.override { systemd = config.boot.initrd.systemd.package; };
+          };
+        };
       };
 
       networking.hostName = "aquarius";
@@ -59,6 +77,7 @@ in
       environment = {
         shells = with pkgs; [ zsh ];
         pathsToLink = [ "/share/zsh" ];
+        systemPackages = with pkgs; [ clevis ];
       };
     };
 }

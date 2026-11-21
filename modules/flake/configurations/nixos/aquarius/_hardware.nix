@@ -16,12 +16,19 @@
     "nvme"
     "usb_storage"
     "sd_mod"
+    "r8169"
   ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   environment.systemPackages = with pkgs; [ mergerfs ];
+
+  environment.etc.crypttab.text = ''
+    parity1 /dev/disk/by-partlabel/disk-parity1-data /etc/secrets/hdd.key luks,nofail
+    disk1   /dev/disk/by-partlabel/disk-disk1-data   /etc/secrets/hdd.key luks,nofail
+    disk2   /dev/disk/by-partlabel/disk-disk2-data   /etc/secrets/hdd.key luks,nofail
+  '';
 
   fileSystems."/mnt/storage" = {
     device = "/mnt/disk*";
