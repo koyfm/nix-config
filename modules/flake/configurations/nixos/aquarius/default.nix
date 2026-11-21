@@ -17,6 +17,7 @@ in
       imports = nixosModules ++ [
         ./_hardware.nix
         ./_disko.nix
+        ./_samba.nix
       ];
 
       system.stateVersion = "26.11";
