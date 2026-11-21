@@ -6,6 +6,7 @@
         config.flake.modules.nixos.base
         config.flake.modules.nixos.nixpkgs-mod
         inputs.catppuccin.nixosModules.catppuccin
+        inputs.disko.nixosModules.disko
         inputs.home-manager.nixosModules.home-manager
         inputs.nix-index-database.nixosModules.nix-index
         inputs.nix-topology.nixosModules.default
