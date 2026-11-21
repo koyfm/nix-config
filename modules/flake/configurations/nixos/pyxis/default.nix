@@ -35,8 +35,12 @@ in
             ffmpeg = final.rpi.ffmpeg-headless;
             SDL2 = final.sdl2-compat.override {
               # https://github.com/moonlight-stream/moonlight-qt/issues/2104
-              sdl3 = final.sdl3.overrideAttrs (old: {
-                patches = (old.patches or [ ]) ++ [ ./sdl3-hidapi-udev-filter.patch ];
+              sdl3 = final.sdl3.overrideAttrs (old: rec {
+                version = "3.4.20";
+                src = old.src.override {
+                  tag = "release-${version}";
+                  hash = "sha256-4BzkSQg2LkfMw0+Q66sKncA1vF7td7ulYN8MExWPfls=";
+                };
                 doCheck = false; # test fails in qemu
               });
             };
