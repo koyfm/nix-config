@@ -19,9 +19,6 @@
 
   home-manager.users.koi.programs.niri.settings = {
     input = {
-      mouse = {
-        accel-speed = 0.5;
-      };
       keyboard.xkb = {
         layout = lib.mkForce "us";
         options = lib.mkForce "";
