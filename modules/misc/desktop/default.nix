@@ -69,6 +69,8 @@
               ++ lib.optionals pkgs.stdenv.hostPlatform.isDarwin [
                 whatsapp-for-mac
               ];
+
+            file."${config.xdg.configHome}/discord/settings.json".force = true;
           };
 
           xdg = {
@@ -90,7 +92,11 @@
           };
 
           programs = {
-            discord.enable = true;
+            discord = {
+              enable = true;
+              package = pkgs.discord.override { withVencord = true; };
+              settings.DANGEROUS_ENABLE_DEVTOOLS_ONLY_ENABLE_IF_YOU_KNOW_WHAT_YOURE_DOING = true;
+            };
             firefox = {
               enable = true;
               profiles = {
