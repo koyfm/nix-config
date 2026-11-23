@@ -42,6 +42,22 @@ in
         ./_sunshine.nix
       ];
 
+      nixpkgs.overlays = [
+        (_: prev: {
+          # TODO https://github.com/pwr-Solaar/Solaar/issues/3372
+          solaar = prev.solaar.overrideAttrs (old: {
+            postPatch = (old.postPatch or "") + ''
+              substituteInPlace lib/logitech_receiver/settings_templates.py \
+                --replace-fail 'common.NamedInts(LOW=0, MEDIUM=1, HIGH=2)' \
+                              'common.NamedInts(LOW=1, MEDIUM=2, HIGH=3)'
+              substituteInPlace tests/logitech_receiver/test_setting_templates.py \
+                --replace-fail 'common.NamedInts(LOW=0, MEDIUM=1, HIGH=2)' \
+                              'common.NamedInts(LOW=1, MEDIUM=2, HIGH=3)'
+            '';
+          });
+        })
+      ];
+
       system.stateVersion = "25.05";
 
       boot = {
