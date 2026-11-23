@@ -55,11 +55,11 @@ in
 
       i18n.defaultLocale = "en_US.UTF-8";
 
-      sops.secrets."koi-password".neededForUsers = true;
+      sops.secrets."koi-passwd".neededForUsers = true;
 
       users.users.koi = {
         isNormalUser = true;
-        hashedPasswordFile = config.sops.secrets."koi-password".path;
+        hashedPasswordFile = config.sops.secrets."koi-passwd".path;
         extraGroups = [ "wheel" ];
         shell = pkgs.zsh;
         openssh.authorizedKeys.keys = [

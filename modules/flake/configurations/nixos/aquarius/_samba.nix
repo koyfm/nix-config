@@ -1,12 +1,6 @@
 { config, ... }:
 {
-  sops.secrets."media-smb-password" = { };
-
-  users.groups.media = { };
-  users.users.media = {
-    isSystemUser = true;
-    group = "media";
-  };
+  sops.secrets."koi-smbpasswd" = { };
 
   services.samba = {
     enable = true;
@@ -25,25 +19,34 @@
         "path" = "/mnt/storage/data";
         "read only" = "no";
         "guest ok" = "no";
-        "valid users" = "media";
-        "force user" = "media";
-        "force group" = "media";
+        "valid users" = "koi";
+        "force user" = "koi";
+        "force group" = "users";
         "create mask" = "0664";
         "directory mask" = "2775";
       };
     };
   };
 
-  systemd.services.samba-smbd = {
-    requires = [ "mnt-storage.mount" ];
-    after = [ "mnt-storage.mount" ];
-  };
+  systemd.services = {
+    samba-smbd = {
+      requires = [ "mnt-storage.mount" ];
+      after = [ "mnt-storage.mount" ];
+    };
 
-  system.activationScripts.samba-media-password = {
-    deps = [ "setupSecrets" ];
-    text = ''
-      pw=$(cat ${config.sops.secrets."media-smb-password".path})
-      printf '%s\n%s\n' "$pw" "$pw" | ${config.services.samba.package}/bin/smbpasswd -s -a media
-    '';
+    samba-koi-password = {
+      wantedBy = [ "samba-smbd.service" ];
+      before = [ "samba-smbd.service" ];
+      after = [ "systemd-tmpfiles-setup.service" ];
+      restartTriggers = [ config.sops.secrets."koi-smbpasswd".sopsFile ];
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+      };
+      script = ''
+        pw=$(cat ${config.sops.secrets."koi-smbpasswd".path})
+        printf '%s\n%s\n' "$pw" "$pw" | ${config.services.samba.package}/bin/smbpasswd -s -a koi
+      '';
+    };
   };
 }

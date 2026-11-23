@@ -69,7 +69,7 @@ in
         zswap.enable = true;
       };
 
-      sops.secrets."koi-password".neededForUsers = true;
+      sops.secrets."koi-passwd".neededForUsers = true;
 
       networking = {
         hostName = "centaurus";
@@ -80,7 +80,7 @@ in
 
       users.users.koi = {
         isNormalUser = true;
-        hashedPasswordFile = config.sops.secrets."koi-password".path;
+        hashedPasswordFile = config.sops.secrets."koi-passwd".path;
         extraGroups = [
           "wheel"
           "docker"
