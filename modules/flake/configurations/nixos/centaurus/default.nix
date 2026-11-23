@@ -32,33 +32,17 @@ let
 in
 {
   flake.modules.nixos."hosts/centaurus" =
+    { config, pkgs, ... }:
     {
-      config,
-      lib,
-      pkgs,
-      ...
-    }:
-    {
-      imports = nixosModules ++ [ ./_hardware.nix ];
+      imports = nixosModules ++ [
+        ./_hardware.nix
+        ./_i18n.nix
+        ./_ai.nix
+        ./_niri.nix
+        ./_sunshine.nix
+      ];
 
       system.stateVersion = "25.05";
-
-      nixpkgs.overlays = [
-        (final: prev: {
-          niri = prev.niri.overrideAttrs {
-            src = final.fetchFromGitHub {
-              owner = "willybarret";
-              repo = "niri";
-              rev = "7fd585dd44ed67644977dd9561bb6e8b3837f8f7";
-              hash = "sha256-OWF03QF62Q8HJ3fCme3I3GX7dKX9YU+JD7bhTiIzfQ4=";
-            };
-            cargoDeps = final.rustPlatform.fetchCargoVendor {
-              inherit (final.niri) src;
-              hash = "sha256-Yqvambc4F7PdGkGxrxp5xD6PqAEAWmMgqOYZRY+TIBA=";
-            };
-          };
-        })
-      ];
 
       boot = {
         loader = {
@@ -69,83 +53,14 @@ in
         zswap.enable = true;
       };
 
-      # nixpkgs.config.rocmSupport = true;
-
       sops.secrets."koi-password".neededForUsers = true;
 
       networking = {
         hostName = "centaurus";
         networkmanager.enable = true;
-        firewall.allowedTCPPorts = [
-          49374 # opencode
-        ];
       };
 
       time.timeZone = "Asia/Jerusalem";
-
-      fonts.packages = with pkgs; [ noto-fonts-cjk-sans ];
-
-      i18n = {
-        defaultLocale = "en_US.UTF-8";
-        extraLocales = [
-          "he_IL.UTF-8/UTF-8"
-          "ja_JP.UTF-8/UTF-8"
-        ];
-
-        inputMethod = {
-          enable = true;
-          type = "fcitx5";
-          fcitx5 = {
-            waylandFrontend = true;
-            ignoreUserConfig = true;
-            addons = with pkgs; [
-              fcitx5-gtk
-              fcitx5-mozc-ut
-            ];
-            settings = {
-              globalOptions = {
-                Hotkey = {
-                  EnumerateWithTriggerKeys = "False";
-                  EnumerateSkipFirst = "False";
-                  ModifierOnlyKeyTimeout = "250";
-                };
-                "Hotkey/EnumerateForwardKeys"."0" = "Alt+Shift_L";
-                "Hotkey/EnumerateBackwardKeys"."0" = "Shift+Alt_L";
-                "Hotkey/TriggerKeys"."0" = "";
-                "Hotkey/AltTriggerKeys"."0" = "";
-                "Hotkey/EnumerateGroupForwardKeys"."0" = "";
-                "Hotkey/EnumerateGroupBackwardKeys"."0" = "";
-                Behavior = {
-                  ActiveByDefault = "False";
-                  ShareInputState = "No";
-                  ShowInputMethodInformation = "False";
-                };
-              };
-              inputMethod = {
-                "Groups/0" = {
-                  Name = "Default";
-                  "Default Layout" = "us";
-                  DefaultIM = "keyboard-us";
-                };
-                "Groups/0/Items/0".Name = "keyboard-us";
-                "Groups/0/Items/1".Name = "keyboard-il";
-                "Groups/1" = {
-                  Name = "Japanese";
-                  "Default Layout" = "us";
-                  DefaultIM = "keyboard-us";
-                };
-                "Groups/1/Items/0".Name = "keyboard-us";
-                "Groups/1/Items/1".Name = "keyboard-il";
-                "Groups/1/Items/2".Name = "mozc";
-                GroupOrder = {
-                  "0" = "Default";
-                  "1" = "Japanese";
-                };
-              };
-            };
-          };
-        };
-      };
 
       users.users.koi = {
         isNormalUser = true;
@@ -167,75 +82,6 @@ in
           home.stateVersion = "26.05";
           home.packages = with pkgs; [ prismlauncher ];
 
-          programs = {
-            niri.settings = {
-              input = {
-                mouse = {
-                  accel-speed = 0.5;
-                };
-                keyboard.xkb = {
-                  layout = lib.mkForce "us";
-                  options = lib.mkForce "";
-                };
-              };
-              outputs = {
-                "DP-1" = {
-                  mode = {
-                    width = 3440;
-                    height = 1440;
-                    refresh = 164.900;
-                  };
-                  variable-refresh-rate = "on-demand";
-                };
-                "sunshine".scale = 2;
-              };
-              binds."Mod+Shift+Space" = {
-                action.spawn = [
-                  (lib.getExe' pkgs.fcitx5 "fcitx5-remote")
-                  "-t"
-                ];
-                hotkey-overlay.title = "Toggle input method";
-              };
-            };
-
-            opencode.settings.server.hostname = "0.0.0.0";
-
-            pi-coding-agent = {
-              settings = {
-                defaultProvider = "llamacpp";
-                defaultModel = "Qwen3.8-27B";
-                compaction.modelOverrides."llamacpp/Qwen3.8-27B" = {
-                  reserveTokens = 8192;
-                  keepRecentTokens = 8192;
-                };
-              };
-              models.providers.llamacpp = {
-                baseUrl = "http://localhost:${toString config.services.llama-cpp.settings.port}/v1";
-                api = "openai-completions";
-                apiKey = "none";
-                models = [
-                  {
-                    id = "Qwen3.8-27B";
-                    name = "Qwen3.8 27B (local)";
-                    reasoning = true;
-                    input = [
-                      "text"
-                      "image"
-                    ];
-                    contextWindow = 32768;
-                    maxTokens = 8192;
-                    cost = {
-                      input = 0.15;
-                      output = 1.875;
-                      cacheRead = 0.0375;
-                      cacheWrite = 0;
-                    };
-                  }
-                ];
-              };
-            };
-          };
-
           dconf.settings."org/gnome/shell".enabled-extensions = [ "hass-gshell@geoph9-on-github" ];
         };
 
@@ -249,46 +95,7 @@ in
           enable = true;
           autostart = true;
         };
-        llama-cpp = {
-          enable = true;
-          package = pkgs.llama-cpp-vulkan;
-          settings = {
-            host = "0.0.0.0";
-            port = 11435;
-            models-preset = "${./models-preset.ini}";
-          };
-        };
         tailscale.enable = true;
-        sunshine = {
-          enable = lib.mkDefault true;
-          openFirewall = true;
-          capSysAdmin = true;
-          settings = {
-            capture = "wlr";
-            global_prep_cmd =
-              let
-                niri = lib.getExe config.programs.niri.package;
-              in
-              builtins.toJSON [
-                {
-                  do = ''sh -c "${
-                    toString [
-                      "${niri} msg create-virtual-output"
-                      "--name sunshine"
-                      "--width $SUNSHINE_CLIENT_WIDTH"
-                      "--height $SUNSHINE_CLIENT_HEIGHT"
-                      "--refresh-rate $SUNSHINE_CLIENT_FPS"
-                    ]
-                  }"'';
-                  undo = "${niri} msg remove-virtual-output sunshine";
-                }
-                {
-                  do = "${niri} msg output DP-1 off";
-                  undo = "${niri} msg output DP-1 on";
-                }
-              ];
-          };
-        };
       };
 
       programs.solaar = {
