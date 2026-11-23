@@ -1,4 +1,7 @@
+{ config, ... }:
 {
+  sops.secrets."media-smb-password" = { };
+
   users.groups.media = { };
   users.users.media = {
     isSystemUser = true;
@@ -34,5 +37,13 @@
   systemd.services.samba-smbd = {
     requires = [ "mnt-storage.mount" ];
     after = [ "mnt-storage.mount" ];
+  };
+
+  system.activationScripts.samba-media-password = {
+    deps = [ "setupSecrets" ];
+    text = ''
+      pw=$(cat ${config.sops.secrets."media-smb-password".path})
+      printf '%s\n%s\n' "$pw" "$pw" | ${config.services.samba.package}/bin/smbpasswd -s -a media
+    '';
   };
 }

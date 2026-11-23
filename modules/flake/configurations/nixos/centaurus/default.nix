@@ -69,16 +69,9 @@ in
         zswap.enable = true;
       };
 
-      sops = {
-        defaultSopsFile = ../../../../../secrets/centaurus.yaml;
-        secrets = {
-          "koi-password" = {
-            neededForUsers = true;
-          };
-        };
-      };
-
       # nixpkgs.config.rocmSupport = true;
+
+      sops.secrets."koi-password".neededForUsers = true;
 
       networking = {
         hostName = "centaurus";

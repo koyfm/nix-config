@@ -1,7 +1,13 @@
 keys:
   - &master age1mczp5k7nkaxccph69lfhmx5lyn2grgdd3zvgs2w7c9qp6lfwlslq4mp2p2
+  - &aquarius age1e20gy0lt3pmy2fugkqmxvdz7ag595u3s7rjdzedmqkvmtkh0xq2sufhc8a
   - &centaurus age1d29r4lnvsqjstg7w5nuzdg2xjrz4kqge0vsx0knnegvey7xn7ykqvkc2le
 creation_rules:
+  - path_regex: ^secrets/aquarius\.yaml$
+    key_groups:
+      - age:
+          - *master
+          - *aquarius
   - path_regex: ^secrets/centaurus\.yaml$
     key_groups:
       - age:

@@ -2,6 +2,7 @@
 let
   nixosModules = with config.flake.modules.nixos; [
     home-manager
+    sops
     ssh
   ];
   homeManagerModules = with config.flake.modules.homeManager; [
@@ -54,9 +55,11 @@ in
 
       i18n.defaultLocale = "en_US.UTF-8";
 
+      sops.secrets."koi-password".neededForUsers = true;
+
       users.users.koi = {
         isNormalUser = true;
-        hashedPassword = "$y$j9T$6wjhqQJnafuweEq181PjS0$i4ellO26Ih.lUEmxkSgnlVa13xxYcNnUqIgdHxUp5n4";
+        hashedPasswordFile = config.sops.secrets."koi-password".path;
         extraGroups = [ "wheel" ];
         shell = pkgs.zsh;
         openssh.authorizedKeys.keys = [

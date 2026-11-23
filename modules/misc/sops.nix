@@ -1,26 +1,23 @@
+{ inputs, ... }:
 {
   flake = {
-    modules.nixos.sops = {
-      config = {
-        sops = {
-          age = {
-            sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-            keyFile = "/var/lib/sops-nix/keys.txt";
-            generateKey = true;
-          };
-        };
-      };
-    };
-    modules.homeManager.sops =
-      { config, ... }:
+    modules.nixos.sops =
+      { config, lib, ... }:
       {
         config = {
           sops = {
-            age = {
-              sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
-              keyFile = "${config.xdg.configHome}/sops/age/keys.txt";
-              generateKey = true;
-            };
+            defaultSopsFile = lib.mkDefault (inputs.self + "/secrets/${config.networking.hostName}.yaml");
+            age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+          };
+        };
+      };
+    modules.homeManager.sops =
+      { config, lib, ... }:
+      {
+        config = {
+          sops = {
+            defaultSopsFile = lib.mkDefault (inputs.self + "/secrets/home/koi.yaml");
+            age.sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
           };
         };
       };
