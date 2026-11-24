@@ -13,7 +13,12 @@ let
 in
 {
   flake.modules.nixos."hosts/aquarius" =
-    { config, pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     {
       imports = nixosModules ++ [
         ./_hardware.nix
@@ -74,6 +79,18 @@ in
       };
 
       services = {
+        beszel.agent = {
+          enable = true;
+          openFirewall = true;
+          smartmon.enable = true;
+          environment = {
+            KEY = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFQCF8LQXZKbtTvIFkO+LPM/n0qxjYAxmgkqyAOfOpXl";
+            EXTRA_FILESYSTEMS = lib.concatMapStringsSep "," (path: "${path}__${baseNameOf path}") (
+              lib.filter (lib.hasPrefix "/mnt/") (lib.attrNames config.fileSystems)
+            );
+            GPU_COLLECTOR = [ "intel_gpu_top" ];
+          };
+        };
         fwupd.enable = true;
         smartd.enable = true;
       };
